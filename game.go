@@ -4,21 +4,29 @@ import (
 	"fmt"
 	"sync"
 	"time"
+	
+	_ "github.com/go-gl/glfw/v3.2/glfw"
 )
 
 type Game struct {
-	windowSets windowOptions
+	window gameWindow
 	running bool
 	initizaled bool
 	test bool
 	mu sync.Mutex
 }
 
+func NewGame() *Game {
+	g := &Game{}
+	g.init()
+	return g
+}
+
 func (g *Game) init() {
 	fmt.Println("Game Init")
-	g.windowSets.width = 300
-	g.windowSets.height = g.windowSets.width/16*9
-	fmt.Println("window: ", g.windowSets.width, "x", g.windowSets.height)
+	
+	g.window = *NewWindow(windowOptions{800, 600, false})
+	
 	g.running = true
 	g.initizaled = true
 }
@@ -50,10 +58,20 @@ func (g *Game) run() {
 	if !g.initizaled {
 		g.init()
 	}
+	// err := glfw.Init()
+	// if err != nil {panic(err)}
+	// defer glfw.Terminate()
 
 	go g.update()
 
 	go g.render()
 
-	for g.running {}
+	for g.running {
+		if g.window.shouldClose() {
+			g.running = false
+		}
+
+		g.window.swapBuffers()
+		g.window.pollEvents()
+	}
 }

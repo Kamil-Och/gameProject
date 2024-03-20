@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"runtime"
-
-	//"github.com/go-gl/glfw/v3.2/glfw"
 )
 
 //TODO: ADD glfw window implementation and options
@@ -16,6 +14,7 @@ func init() {
 
 func main() {
 	fmt.Println("main")
-	game := Game{}
+	game := NewGame()
+
 	game.run()
 }
