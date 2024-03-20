@@ -8,8 +8,6 @@ import (
 )
 
 //TODO: ADD glfw window implementation and options
-//TODO: ADD concurrency to the game loop
-//TODO: UPDATE[ logic 60 fps ] and RENDER [ rendering to screen unlimited ][ buffer? ] functions in game
 
 func init() {
 	fmt.Println("init")
