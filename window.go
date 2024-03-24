@@ -29,11 +29,6 @@ func (w *gameWindow) init(options windowOptions) {
 	w.width = options.width
 	w.height = options.height
 
-	err := glfw.Init()
-	if err != nil {panic(err)}
-	//defer glfw.Terminate()
-	//TODO: FIX THIS 
-
 	if !options.resizable {
 		glfw.WindowHint(glfw.Resizable, glfw.False)
 	} else {
