@@ -5,8 +5,6 @@ import (
 	//"runtime"
 )
 
-//TODO: ADD glfw window implementation and options
-
 func init() {
 	fmt.Println("init")
 	//runtime.LockOSThread()
