@@ -53,20 +53,39 @@ func (g *Game) update () {
 		//Select to get the keys
 		select {
 			case keys := <-g.inputEvent:
-				fmt.Println("keys", keys)
 				keysRec = keys
 			default:
 		}
 
 		//Input logic
-		if slices.Contains(keysRec, glfw.KeyW) {
-			fmt.Println("")
+		if slices.Contains(keysRec, glfw.KeyEscape) {
+			fmt.Println("Escape pressed")
 			g.running = false
+		}
+
+		if slices.Contains(keysRec, glfw.KeyW) {
+			fmt.Println("W pressed")
+			g.world.y += 0.1
+			fmt.Println(g.world.x, g.world.y)
+		}
+		if slices.Contains(keysRec, glfw.KeyS) {
+			fmt.Println("S pressed")
+			g.world.y -= 0.1
+			fmt.Println(g.world.x, g.world.y)
+		}
+		if slices.Contains(keysRec, glfw.KeyA) {
+			fmt.Println("A pressed")
+			g.world.x -= 0.1
+			fmt.Println(g.world.x, g.world.y)
+		}
+		if slices.Contains(keysRec, glfw.KeyD) {
+			fmt.Println("D pressed")
+			g.world.x += 0.1
+			fmt.Println(g.world.x, g.world.y)
 		}
 		//Update the world
 
 		
-
 		//Select to send the world to render
 		select{
 			case g.renerInfo <- g.world:
@@ -96,8 +115,13 @@ func (g *Game) render () {
 
 	keys := []glfw.Key{}
 
+	gl.Viewport(0, 0, 800, 600)
+	gl.Enable(gl.DEPTH_TEST)
+
+
+	
+
 	for g.running {
-		fmt.Println("render start")
 		//Select to get the world
 		select {
 			case g.world = <-g.renerInfo:
@@ -113,6 +137,7 @@ func (g *Game) render () {
 		//Swap the buffers
 		g.window.pollEvents()
 		g.window.swapBuffers()
+
 		//Get the keys
 		keys = []glfw.Key{}
 
@@ -122,7 +147,15 @@ func (g *Game) render () {
 		if g.window.window.GetKey(glfw.KeyW) == glfw.Press {
 			keys = append(keys, glfw.KeyW)
 		}
-
+		if g.window.window.GetKey(glfw.KeyS) == glfw.Press {
+			keys = append(keys, glfw.KeyS)
+		}
+		if g.window.window.GetKey(glfw.KeyA) == glfw.Press {
+			keys = append(keys, glfw.KeyA)
+		}
+		if g.window.window.GetKey(glfw.KeyD) == glfw.Press {
+			keys = append(keys, glfw.KeyD)
+		}
 		//Select to send the keys to update
 		select {
 			case g.inputEvent <- keys:

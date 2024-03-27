@@ -1,8 +1,8 @@
 package main
 
 type World struct {
-	x int
-	y int
+	x float64
+	y float64
 }
 
 func NewWorld() *World {
@@ -14,4 +14,13 @@ func NewWorld() *World {
 func (w *World) init() {
 	w.x = 0
 	w.y = 0
+}
+
+type GameObject struct {
+	x float64
+	y float64
+	//verticies?
+	//texture?
+	//shader?
+	//etc
 }
